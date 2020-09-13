@@ -320,9 +320,8 @@ class Castjs {
       this.trigger('error', err)
     });
   };
-  disconnect() {
-    // Terminate session
-    cast.framework.CastContext.getInstance().endCurrentSession(true);
+  reset() {
+    // Stop any media playing
     this.controller.stop();
     // Reset some variables
     this.session              = false;
@@ -340,6 +339,11 @@ class Castjs {
     this.durationPretty = '00:00:00';
     this.progress       = 0;
     this.state          = 'disconnected';
+  };
+  disconnect() {
+    // Terminate session
+    cast.framework.CastContext.getInstance().endCurrentSession(true);
+    this.reset();
     this.trigger('disconnect');
     return this;
   };
